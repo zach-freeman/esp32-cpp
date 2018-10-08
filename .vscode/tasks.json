@@ -5,7 +5,6 @@
     "tasks": [
         {
             "label": "build app",
-            //"group": "build",
             "command": "${env:IDF_PATH}/tools/idf.py",
             "type": "shell",
             "args": [
@@ -36,41 +35,49 @@
                 "clean"
             ],
             "presentation": {
-                "reveal": "always",
+                "reveal": "always"
             },
+            "problemMatcher": [
+                "$gcc"
+            ]
         },
         {
             "label": "flash app",
             "command": "${env:IDF_PATH}/tools/idf.py",
             "type": "shell",
             "args": [
-                "-p","/dev/ttyUSB0","flash"
+                "-p",
+                "/dev/ttyUSB0",
+                "flash"
             ],
             "presentation": {
-                "reveal": "always",
+                "reveal": "always"
             },
+            "problemMatcher": [
+                "$gcc"
+            ]
         },
         {
             "label": "monitor",
-            "type":"shell",
+            "type": "shell",
             "command": "${env:IDF_PATH}/tools/idf.py",
             "args": [
                 "monitor"
             ],
             "presentation": {
-                "reveal": "always",
+                "reveal": "always"
             },
             "problemMatcher": []
         },
         {
             "label": "menuconfig",
-            "type":"shell",
+            "type": "shell",
             "command": "${env:IDF_PATH}/tools/idf.py",
             "args": [
                 "menuconfig"
             ],
             "presentation": {
-                "reveal": "always",
+                "reveal": "always"
             },
             "problemMatcher": []
         }
