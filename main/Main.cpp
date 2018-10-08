@@ -19,6 +19,9 @@
 #include "esp_log.h"
 #include "esp_bt.h"
 #include "esp_bt_device.h"
+#include "esp_gap_bt_api.h"
+#include "BluetoothDriver.hpp"
+
 
 using std::cout;
 using std::endl;
@@ -30,32 +33,6 @@ extern "C" {
 	void app_main(void);
 }
 
-class Greeting {
-public:
-	void helloEnglish() {
-		ESP_LOGI(tag, "Hello %s", name.c_str());
-	}
-
-	void helloFrench() {
-		ESP_LOGI(tag, "Bonjour %s", name.c_str());
-	}
-
-	void setName(std::string name) {
-		this->name = name;
-	}
-private:
-	std::string name = "";
-
-};
-
-class Bluetooth {
-public:
-	void startUp()
-	{
-		char *dev_name = "ESP-BABY";
-		esp_bt_dev_set_device_name(dev_name);
-	}
-};
 
 void app_main(void)
 {
@@ -81,6 +58,6 @@ void app_main(void)
          ESP_LOGE(tag, "%s enable controller failed: %s\n", __func__, esp_err_to_name(ret));
          return;
     }
-    Bluetooth bluetooth;
+    BluetoothDriver bluetooth;
     bluetooth.startUp();
 }
