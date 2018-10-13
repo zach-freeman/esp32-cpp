@@ -1,4 +1,5 @@
 #include "BluetoothDriver.hpp"
+#include "WS2812.h"
 #include <cstring>
 
 #include <iostream>
@@ -25,6 +26,10 @@ BluetoothDriver::BluetoothDriver()
 
 void BluetoothDriver::startUp()
 {
+
+    WS2812 neopixel = WS2812((gpio_num_t)21, 30);
+    neopixel.setPixel(5, 128, 0, 0);
+    neopixel.show();
     char *dev_name = "ESP-BABY";
     esp_bt_dev_set_device_name(dev_name);
 
