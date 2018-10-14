@@ -27,9 +27,7 @@ BluetoothDriver::BluetoothDriver()
 void BluetoothDriver::startUp()
 {
 
-    WS2812 neopixel = WS2812((gpio_num_t)21, 30);
-    neopixel.setPixel(5, 128, 0, 0);
-    neopixel.show();
+
     char *dev_name = "ESP-BABY";
     esp_bt_dev_set_device_name(dev_name);
 
@@ -61,16 +59,16 @@ void BluetoothDriver::bluetoothAppGapCallback(esp_bt_gap_cb_event_t event, esp_b
     }
     case ESP_BT_GAP_DISC_STATE_CHANGED_EVT: {
         if (param->disc_st_chg.state == ESP_BT_GAP_DISCOVERY_STOPPED) {
-            ESP_LOGI(GAP_TAG, "Device discovery stopped.");
+            ESP_LOGI(BLUETOOTH_DRIVER_TAG, "Device discovery stopped.");
             if ( (p_dev->state == APP_GAP_STATE_DEVICE_DISCOVER_COMPLETE ||
                     p_dev->state == APP_GAP_STATE_DEVICE_DISCOVERING)
                     && p_dev->dev_found) {
                 p_dev->state = APP_GAP_STATE_SERVICE_DISCOVERING;
-                ESP_LOGI(GAP_TAG, "Discover services ...");
+                ESP_LOGI(BLUETOOTH_DRIVER_TAG, "Discover services ...");
                 esp_bt_gap_get_remote_services(p_dev->bda);
             }
         } else if (param->disc_st_chg.state == ESP_BT_GAP_DISCOVERY_STARTED) {
-            ESP_LOGI(GAP_TAG, "Discovery started.");
+            ESP_LOGI(BLUETOOTH_DRIVER_TAG, "Discovery started.");
         }
         break;
     }
@@ -79,21 +77,21 @@ void BluetoothDriver::bluetoothAppGapCallback(esp_bt_gap_cb_event_t event, esp_b
                 p_dev->state == APP_GAP_STATE_SERVICE_DISCOVERING) {
             p_dev->state = APP_GAP_STATE_SERVICE_DISCOVER_COMPLETE;
             if (param->rmt_srvcs.stat == ESP_BT_STATUS_SUCCESS) {
-                ESP_LOGI(GAP_TAG, "Services for device %s found",  bda2str(p_dev->bda, bda_str, 18));
+                ESP_LOGI(BLUETOOTH_DRIVER_TAG, "Services for device %s found",  bda2str(p_dev->bda, bda_str, 18));
                 for (int i = 0; i < param->rmt_srvcs.num_uuids; i++) {
                     esp_bt_uuid_t *u = param->rmt_srvcs.uuid_list + i;
-                    ESP_LOGI(GAP_TAG, "--%s", uuid2str(u, uuid_str, 37));
-                    // ESP_LOGI(GAP_TAG, "--%d", u->len);
+                    ESP_LOGI(BLUETOOTH_DRIVER_TAG, "--%s", uuid2str(u, uuid_str, 37));
+                    // ESP_LOGI(BLUETOOTH_DRIVER_TAG, "--%d", u->len);
                 }
             } else {
-                ESP_LOGI(GAP_TAG, "Services for device %s not found",  bda2str(p_dev->bda, bda_str, 18));
+                ESP_LOGI(BLUETOOTH_DRIVER_TAG, "Services for device %s not found",  bda2str(p_dev->bda, bda_str, 18));
             }
         }
         break;
     }
     case ESP_BT_GAP_RMT_SRVC_REC_EVT:
     default: {
-        ESP_LOGI(GAP_TAG, "event: %d", event);
+        ESP_LOGI(BLUETOOTH_DRIVER_TAG, "event: %d", event);
         break;
     }
     }
@@ -107,17 +105,17 @@ void BluetoothDriver::updateDeviceInfo(esp_bt_gap_cb_param_t *param)
     int32_t rssi = -129; /* invalid value */
     esp_bt_gap_dev_prop_t *p;
 
-    ESP_LOGI(GAP_TAG, "Device found: %s", bda2str(param->disc_res.bda, bda_str, 18));
+    ESP_LOGI(BLUETOOTH_DRIVER_TAG, "Device found: %s", bda2str(param->disc_res.bda, bda_str, 18));
     for (int i = 0; i < param->disc_res.num_prop; i++) {
         p = param->disc_res.prop + i;
         switch (p->type) {
         case ESP_BT_GAP_DEV_PROP_COD:
             cod = *(uint32_t *)(p->val);
-            ESP_LOGI(GAP_TAG, "--Class of Device: 0x%x", cod);
+            ESP_LOGI(BLUETOOTH_DRIVER_TAG, "--Class of Device: 0x%x", cod);
             break;
         case ESP_BT_GAP_DEV_PROP_RSSI:
             rssi = *(int8_t *)(p->val);
-            ESP_LOGI(GAP_TAG, "--RSSI: %d", rssi);
+            ESP_LOGI(BLUETOOTH_DRIVER_TAG, "--RSSI: %d", rssi);
             break;
         case ESP_BT_GAP_DEV_PROP_BDNAME:
         default:
@@ -167,9 +165,9 @@ void BluetoothDriver::updateDeviceInfo(esp_bt_gap_cb_param_t *param)
 
     if (p_dev->eir && p_dev->bdname_len == 0) {
         getNameFromEir(p_dev->eir, p_dev->bdname, &p_dev->bdname_len);
-        ESP_LOGI(GAP_TAG, "Found a target device, address %s, name %s", bda_str, p_dev->bdname);
+        ESP_LOGI(BLUETOOTH_DRIVER_TAG, "Found a target device, address %s, name %s", bda_str, p_dev->bdname);
         p_dev->state = APP_GAP_STATE_DEVICE_DISCOVER_COMPLETE;
-        ESP_LOGI(GAP_TAG, "Cancel device discovery ...");
+        ESP_LOGI(BLUETOOTH_DRIVER_TAG, "Cancel device discovery ...");
         esp_bt_gap_cancel_discovery();
     }
 }

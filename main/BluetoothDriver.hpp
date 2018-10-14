@@ -32,5 +32,5 @@ public:
     static char *uuid2str(esp_bt_uuid_t *uuid, char *str, size_t size);
     static bool getNameFromEir(uint8_t *eir, uint8_t *bdname, uint8_t *bdname_len);
     static app_gap_cb_t m_dev_info;
-    static constexpr const char * GAP_TAG = "hello";
+    static constexpr const char * BLUETOOTH_DRIVER_TAG = "BLUETOOTH_DRIVER";
 };
