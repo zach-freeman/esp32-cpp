@@ -1,14 +1,13 @@
-# Example: C++ exception handling
+# Esp32 - Messing around with bluetooth and neopixels
 
-(See the README.md file in the upper level 'examples' directory for more information about examples.)
 
-This example demonstrates usage of C++ exceptions in ESP-IDF.
+This example demonstrates usage of bluetooth and neopixels on esp
 
 By default, C++ exceptions support is disabled in ESP-IDF. It can be enabled using `CONFIG_CXX_EXCEPTIONS` configuration option.
 
 In this example, `sdkconfig.defaults` file sets `CONFIG_CXX_EXCEPTIONS` option. This enables both compile time support (`-fexceptions` compiler flag) and run-time support for C++ exception handling.
 
-Example source code declares a class which can throw exception from the constructor, depending on the argument. It illustrates that exceptions can be thrown and caught using standard C++ facilities.
+Example source code declares a class which can start a bluetooth server and turn neopixels on and off 
 
 ## How to use example
 

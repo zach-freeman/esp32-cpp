@@ -23,11 +23,7 @@
 #include "BluetoothDriver.hpp"
 
 
-using std::cout;
-using std::endl;
 
-
-static char tag[]="cpp_helloworld";
 
 extern "C" {
 	void app_main(void);
