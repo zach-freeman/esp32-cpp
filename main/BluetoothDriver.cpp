@@ -39,7 +39,7 @@ class MyCallbackHandler: public BLECharacteristicCallbacks {
         if (!areLightsOn)
         {
             areLightsOn = true;
-            myNeoPixelDriver->setAllPixels(128, 0, 0);
+            myNeoPixelDriver->setAllPixels(128, 128, 128);
             pCharacteristic->setValue("Light On");
         }
         else
@@ -50,6 +50,13 @@ class MyCallbackHandler: public BLECharacteristicCallbacks {
         }
 
 	}
+
+    void onWrite(BLECharacteristic *pCharacteristic)
+    {
+        areLightsOn = true;
+        pCharacteristic->setValue("Party");
+        myNeoPixelDriver->testStrand();
+    }
 };
 
 class MainBLEServer: public Task {
