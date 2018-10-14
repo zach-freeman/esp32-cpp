@@ -13,10 +13,11 @@ public:
     static constexpr const char * NEOPIXEL_DRIVER_TAG = "NEOPIXEL_DRIVER";
     static constexpr const gpio_num_t NEOPIXEL_PIN = GPIO_NUM_21;
     static constexpr const uint16_t PIXEL_COUNT = 30;
+    void setAllPixels(uint8_t redValue, uint8_t greenValue, uint8_t blueValue);
 private:
     WS2812 *neoPixelStrand;
     void startUp();
-    void setAllPixels(uint8_t redValue, uint8_t greenValue, uint8_t blueValue);
+
 };
 
 #endif /* MAIN_NEOPIXELDRIVER_H_ */

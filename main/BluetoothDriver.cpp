@@ -12,9 +12,45 @@
 #include <Task.h>
 
 
+
+#include <sys/time.h>
+#include <sstream>
+
+
 #include "sdkconfig.h"
 
 static char LOG_TAG[] = "SampleServer";
+
+class MyCallbackHandler: public BLECharacteristicCallbacks {
+    public:
+        NeoPixelDriver *myNeoPixelDriver;
+        bool areLightsOn;
+
+    MyCallbackHandler() {
+        myNeoPixelDriver = new NeoPixelDriver();
+        areLightsOn = false;
+    }
+
+    virtual ~MyCallbackHandler() {
+        delete myNeoPixelDriver;
+    }
+    
+	void onRead(BLECharacteristic *pCharacteristic) {
+        if (!areLightsOn)
+        {
+            areLightsOn = true;
+            myNeoPixelDriver->setAllPixels(128, 0, 0);
+            pCharacteristic->setValue("Light On");
+        }
+        else
+        {
+            areLightsOn = false;
+            myNeoPixelDriver->setAllPixels(0, 0, 0);
+            pCharacteristic->setValue("Light Off");
+        }
+
+	}
+};
 
 class MainBLEServer: public Task {
 	void run(void *data) {
@@ -33,6 +69,7 @@ class MainBLEServer: public Task {
 		);
 
 		pCharacteristic->setValue("Hello World!");
+        pCharacteristic->setCallbacks(new MyCallbackHandler());
 
 		BLE2902* p2902Descriptor = new BLE2902();
 		p2902Descriptor->setNotifications(true);
@@ -53,6 +90,10 @@ class MainBLEServer: public Task {
 BluetoothDriver::BluetoothDriver()
 {
 
+}
+
+BluetoothDriver::~BluetoothDriver()
+{
 }
 
 void BluetoothDriver::startUp()
