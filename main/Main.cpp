@@ -20,7 +20,7 @@
 #include "esp_bt.h"
 #include "esp_bt_device.h"
 #include "esp_gap_bt_api.h"
-#include "BluetoothDriver.hpp"
+#include "HttpServerInitializer.hpp"
 
 
 
@@ -32,6 +32,6 @@ extern "C" {
 
 void app_main(void)
 {
-    BluetoothDriver bluetooth;
-    bluetooth.startUp();
+    HttpServerInitializer httpServerInitializer;
+    httpServerInitializer.startUp();
 }
