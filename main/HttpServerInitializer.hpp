@@ -15,8 +15,6 @@ private:
     static NeoPixelDriver *neoPixelDriver;
     static bool areLightsOn;
     static constexpr const char * HTTP_SERVER_INTIALIZER_TAG = "HTTP_SERVER_INITIALIZER";
-    static void lightOnHandler(HttpRequest* pRequest, HttpResponse* pResponse);
-    static void lightOffHandler(HttpRequest* pRequest, HttpResponse* pResponse);
 
 };
 
