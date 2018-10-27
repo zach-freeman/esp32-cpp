@@ -41,20 +41,20 @@ void HttpServerInitializer::startUp()
 	wifi = new WiFi();
     HttpServerHandler httpServerHandler;
 
-	wifi->connectAP("nope, "nope");
+	wifi->connectAP("nope", "nope");
 
     HttpServer *httpServer = new HttpServer();
     httpServer->addPathHandler(
             HttpRequest::HTTP_METHOD_GET,
-            "/lightOn",
+            HttpServerHandler::LIGHT_ON_PATH,
             httpServerHandler.lightOn);
     httpServer->addPathHandler(
             HttpRequest::HTTP_METHOD_GET,
-            "/lightOff",
+            HttpServerHandler::LIGHT_OFF_PATH,
             httpServerHandler.lightOff);
     httpServer->addPathHandler(
             HttpRequest::HTTP_METHOD_GET,
-            "/lightStatus",
+            HttpServerHandler::LIGHT_STATUS_PATH,
             httpServerHandler.lightStatus);
     httpServer->start(80);
  

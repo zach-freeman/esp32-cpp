@@ -18,6 +18,9 @@
 
 bool HttpServerHandler::areLightsOn;
 NeoPixelDriver *HttpServerHandler::neoPixelDriver;
+constexpr char HttpServerHandler::LIGHT_ON_PATH[];
+constexpr char HttpServerHandler::LIGHT_OFF_PATH[];
+constexpr char HttpServerHandler::LIGHT_STATUS_PATH[];
 
 HttpServerHandler::HttpServerHandler()
 {
@@ -27,7 +30,7 @@ HttpServerHandler::HttpServerHandler()
 
 HttpServerHandler::~HttpServerHandler()
 {
-
+    free(neoPixelDriver);
 }
 
 void HttpServerHandler::lightOn(HttpRequest* pRequest, HttpResponse* pResponse)

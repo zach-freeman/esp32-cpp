@@ -13,6 +13,10 @@ public:
     static void lightOff(HttpRequest* pRequest, HttpResponse* pResponse);
     static void lightStatus(HttpRequest *pRequest, HttpResponse* pResponse);
 
+    static constexpr char LIGHT_ON_PATH[] {"/lightOn"};
+    static constexpr char LIGHT_OFF_PATH[] {"/lightOff"};
+    static constexpr char LIGHT_STATUS_PATH[] {"/lightStatus"};
+
 private:
     static NeoPixelDriver *neoPixelDriver;
     static bool areLightsOn;
