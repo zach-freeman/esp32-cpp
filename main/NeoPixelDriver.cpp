@@ -47,6 +47,24 @@ void NeoPixelDriver::setAllPixels(uint8_t redValue, uint8_t greenValue, uint8_t 
     neoPixelStrand->show();
 }
 
+void NeoPixelDriver::setChristmas()
+{
+    for (int i = 0; i < PIXEL_COUNT; i++)
+    {
+        if (i%2 == 0)
+        {
+            // set red
+            neoPixelStrand->setPixel(i, 128, 0, 0);
+        }
+        else
+        {
+            // set green
+            neoPixelStrand->setPixel(i, 0, 128, 0);
+        }
+    }
+    neoPixelStrand->show();
+}
+
 void NeoPixelDriver::testStrand()
 {
     for (int j=0; j < 256; j++) {     // cycle all 256 colors in the wheel

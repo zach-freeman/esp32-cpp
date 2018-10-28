@@ -56,6 +56,11 @@ void HttpServerInitializer::startUp()
             HttpRequest::HTTP_METHOD_GET,
             HttpServerHandler::LIGHT_STATUS_PATH,
             httpServerHandler.lightStatus);
+    httpServer->addPathHandler(
+            HttpRequest::HTTP_METHOD_GET,
+            HttpServerHandler::CHRISTMAS_PATH,
+            httpServerHandler.christmas);     
+
     httpServer->start(80);
  
 }

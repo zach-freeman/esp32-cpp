@@ -21,6 +21,7 @@ NeoPixelDriver *HttpServerHandler::neoPixelDriver;
 constexpr char HttpServerHandler::LIGHT_ON_PATH[];
 constexpr char HttpServerHandler::LIGHT_OFF_PATH[];
 constexpr char HttpServerHandler::LIGHT_STATUS_PATH[];
+constexpr char HttpServerHandler::CHRISTMAS_PATH[];
 
 HttpServerHandler::HttpServerHandler()
 {
@@ -65,5 +66,15 @@ void HttpServerHandler::lightStatus(HttpRequest *pRequest, HttpResponse* pRespon
     {
         pResponse->sendData("Off");
     }
+    pResponse->close();
+}
+
+void HttpServerHandler::christmas(HttpRequest* pRequest, HttpResponse* pResponse)
+{
+    pResponse->setStatus(HttpResponse::HTTP_STATUS_OK, "OK");
+    pResponse->addHeader(HttpRequest::HTTP_HEADER_CONTENT_TYPE, "text/plain");
+    pResponse->sendData("HO HO HO");
+    neoPixelDriver->setChristmas();
+    areLightsOn = true;
     pResponse->close();
 }

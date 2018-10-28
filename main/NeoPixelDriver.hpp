@@ -14,6 +14,7 @@ public:
     static constexpr const gpio_num_t NEOPIXEL_PIN = GPIO_NUM_21;
     static constexpr const uint16_t PIXEL_COUNT = 30;
     void setAllPixels(uint8_t redValue, uint8_t greenValue, uint8_t blueValue);
+    void setChristmas();
     void testStrand();
 private:
     WS2812 *neoPixelStrand;
