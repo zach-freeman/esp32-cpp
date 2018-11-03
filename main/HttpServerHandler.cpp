@@ -4,20 +4,17 @@
  * Create a new Http server.
  */
 
-#include <string>
-#include <WiFi.h>
 #include "esp_log.h"
+#include <WiFi.h>
+#include <string>
 
-
-
-#include <sys/time.h>
 #include <sstream>
-
+#include <sys/time.h>
 
 #include "sdkconfig.h"
 
 bool HttpServerHandler::areLightsOn;
-NeoPixelDriver *HttpServerHandler::neoPixelDriver;
+NeoPixelDriver * HttpServerHandler::neoPixelDriver;
 constexpr char HttpServerHandler::LIGHT_ON_PATH[];
 constexpr char HttpServerHandler::LIGHT_OFF_PATH[];
 constexpr char HttpServerHandler::LIGHT_STATUS_PATH[];
@@ -34,7 +31,7 @@ HttpServerHandler::~HttpServerHandler()
     free(neoPixelDriver);
 }
 
-void HttpServerHandler::lightOn(HttpRequest* pRequest, HttpResponse* pResponse)
+void HttpServerHandler::lightOn(HttpRequest * pRequest, HttpResponse * pResponse)
 {
     pResponse->setStatus(HttpResponse::HTTP_STATUS_OK, "OK");
     pResponse->addHeader(HttpRequest::HTTP_HEADER_CONTENT_TYPE, "text/plain");
@@ -44,7 +41,7 @@ void HttpServerHandler::lightOn(HttpRequest* pRequest, HttpResponse* pResponse)
     pResponse->close();
 }
 
-void HttpServerHandler::lightOff(HttpRequest* pRequest, HttpResponse* pResponse)
+void HttpServerHandler::lightOff(HttpRequest * pRequest, HttpResponse * pResponse)
 {
     pResponse->setStatus(HttpResponse::HTTP_STATUS_OK, "OK");
     pResponse->addHeader(HttpRequest::HTTP_HEADER_CONTENT_TYPE, "text/plain");
@@ -54,13 +51,13 @@ void HttpServerHandler::lightOff(HttpRequest* pRequest, HttpResponse* pResponse)
     pResponse->close();
 }
 
-void HttpServerHandler::lightStatus(HttpRequest *pRequest, HttpResponse* pResponse)
+void HttpServerHandler::lightStatus(HttpRequest * pRequest, HttpResponse * pResponse)
 {
     pResponse->setStatus(HttpResponse::HTTP_STATUS_OK, "OK");
     pResponse->addHeader(HttpRequest::HTTP_HEADER_CONTENT_TYPE, "text/plain");
     if (areLightsOn)
     {
-        pResponse->sendData("On"); 
+        pResponse->sendData("On");
     }
     else
     {
@@ -69,7 +66,7 @@ void HttpServerHandler::lightStatus(HttpRequest *pRequest, HttpResponse* pRespon
     pResponse->close();
 }
 
-void HttpServerHandler::christmas(HttpRequest* pRequest, HttpResponse* pResponse)
+void HttpServerHandler::christmas(HttpRequest * pRequest, HttpResponse * pResponse)
 {
     pResponse->setStatus(HttpResponse::HTTP_STATUS_OK, "OK");
     pResponse->addHeader(HttpRequest::HTTP_HEADER_CONTENT_TYPE, "text/plain");

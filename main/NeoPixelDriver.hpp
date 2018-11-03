@@ -1,12 +1,11 @@
 #ifndef MAIN_NEOPIXELDRIVER_H_
 #define MAIN_NEOPIXELDRIVER_H_
-#include "esp_gap_bt_api.h"
 #include "WS2812.h"
 #include "driver/gpio.h"
+#include "esp_gap_bt_api.h"
 
-
-
-class NeoPixelDriver {
+class NeoPixelDriver
+{
 public:
     NeoPixelDriver();
     virtual ~NeoPixelDriver();
@@ -16,8 +15,9 @@ public:
     void setAllPixels(uint8_t redValue, uint8_t greenValue, uint8_t blueValue);
     void setChristmas();
     void testStrand();
+
 private:
-    WS2812 *neoPixelStrand;
+    WS2812 * neoPixelStrand;
     void startUp();
     uint32_t Wheel(uint8_t WheelPos);
     uint32_t Color(uint8_t r, uint8_t g, uint8_t b);

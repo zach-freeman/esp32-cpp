@@ -5,30 +5,26 @@
  * 4. Check the box for "CDT GCC Built-in Compiler Settings"
  * 5. Set the compiler spec command to "xtensa-esp32-elf-gcc ${FLAGS} -E -P -v -dD "${INPUTS}""
  * 6. Rebuild the index
-*/
+ */
 
 #include <string>
 
-#include <iostream>
+#include "HttpServerInitializer.hpp"
+#include "esp_bt.h"
+#include "esp_bt_device.h"
+#include "esp_gap_bt_api.h"
 #include "esp_log.h"
+#include "esp_system.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "nvs.h"
 #include "nvs_flash.h"
-#include "esp_system.h"
-#include "esp_log.h"
-#include "esp_bt.h"
-#include "esp_bt_device.h"
-#include "esp_gap_bt_api.h"
-#include "HttpServerInitializer.hpp"
+#include <iostream>
 
-
-
-
-extern "C" {
-	void app_main(void);
+extern "C"
+{
+    void app_main(void);
 }
-
 
 void app_main(void)
 {
