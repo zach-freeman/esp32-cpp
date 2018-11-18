@@ -16,9 +16,7 @@
 #include "sdkconfig.h"
 
 static WiFi * wifi;
-
-bool HttpServerInitializer::areLightsOn;
-NeoPixelDriver * HttpServerInitializer::neoPixelDriver;
+HttpServerHandler * HttpServerInitializer::httpServerHandler;
 
 HttpServerInitializer::HttpServerInitializer()
 {
@@ -35,15 +33,15 @@ void HttpServerInitializer::startUp()
     esp_log_level_set("*", ESP_LOG_DEBUG);
 
     wifi = new WiFi();
-    HttpServerHandler httpServerHandler;
+    httpServerHandler = new HttpServerHandler();
 
     wifi->connectAP(PrivateConstants::WIFI_SSID, PrivateConstants::WIFI_PASSWORD);
 
     HttpServer * httpServer = new HttpServer();
-    httpServer->addPathHandler(HttpRequest::HTTP_METHOD_GET, HttpServerHandler::LIGHT_ON_PATH, httpServerHandler.lightOn);
-    httpServer->addPathHandler(HttpRequest::HTTP_METHOD_GET, HttpServerHandler::LIGHT_OFF_PATH, httpServerHandler.lightOff);
-    httpServer->addPathHandler(HttpRequest::HTTP_METHOD_GET, HttpServerHandler::LIGHT_STATUS_PATH, httpServerHandler.lightStatus);
-    httpServer->addPathHandler(HttpRequest::HTTP_METHOD_GET, HttpServerHandler::CHRISTMAS_PATH, httpServerHandler.christmas);
+    httpServer->addPathHandler(HttpRequest::HTTP_METHOD_GET, HttpServerHandler::LIGHT_ON_PATH, httpServerHandler->lightOn);
+    httpServer->addPathHandler(HttpRequest::HTTP_METHOD_GET, HttpServerHandler::LIGHT_OFF_PATH, httpServerHandler->lightOff);
+    httpServer->addPathHandler(HttpRequest::HTTP_METHOD_GET, HttpServerHandler::LIGHT_STATUS_PATH, httpServerHandler->lightStatus);
+    httpServer->addPathHandler(HttpRequest::HTTP_METHOD_GET, HttpServerHandler::CHRISTMAS_PATH, httpServerHandler->christmas);
 
     httpServer->start(80);
 }

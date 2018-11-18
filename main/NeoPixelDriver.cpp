@@ -13,8 +13,7 @@
 #include "nvs_flash.h"
 #include <iostream>
 
-using std::cout;
-using std::endl;
+WS2812 * NeoPixelDriver::neoPixelStrand;
 
 NeoPixelDriver::NeoPixelDriver()
 {
@@ -37,6 +36,7 @@ void NeoPixelDriver::startUp()
 
 void NeoPixelDriver::setAllPixels(uint8_t redValue, uint8_t greenValue, uint8_t blueValue)
 {
+    assert(neoPixelStrand != nullptr);
     for (int i = 0; i < PIXEL_COUNT; i++)
     { // do something to all the neopixels
         neoPixelStrand->setPixel(i, redValue, greenValue, blueValue);

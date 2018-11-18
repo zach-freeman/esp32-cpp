@@ -36,6 +36,7 @@ void HttpServerHandler::lightOn(HttpRequest * pRequest, HttpResponse * pResponse
     pResponse->setStatus(HttpResponse::HTTP_STATUS_OK, "OK");
     pResponse->addHeader(HttpRequest::HTTP_HEADER_CONTENT_TYPE, "text/plain");
     pResponse->sendData("Light On");
+    ESP_LOGE(HTTP_SERVER_INTIALIZER_TAG, "setting pixels on");
     neoPixelDriver->setAllPixels(128, 128, 128);
     areLightsOn = true;
     pResponse->close();
@@ -46,6 +47,7 @@ void HttpServerHandler::lightOff(HttpRequest * pRequest, HttpResponse * pRespons
     pResponse->setStatus(HttpResponse::HTTP_STATUS_OK, "OK");
     pResponse->addHeader(HttpRequest::HTTP_HEADER_CONTENT_TYPE, "text/plain");
     pResponse->sendData("Light Off");
+    ESP_LOGE(HTTP_SERVER_INTIALIZER_TAG, "setting pixels on");
     neoPixelDriver->setAllPixels(0, 0, 0);
     areLightsOn = false;
     pResponse->close();

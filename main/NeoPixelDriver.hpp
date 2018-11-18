@@ -17,7 +17,7 @@ public:
     void testStrand();
 
 private:
-    WS2812 * neoPixelStrand;
+    static WS2812 * neoPixelStrand;
     void startUp();
     uint32_t Wheel(uint8_t WheelPos);
     uint32_t Color(uint8_t r, uint8_t g, uint8_t b);
