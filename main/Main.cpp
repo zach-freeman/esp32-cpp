@@ -20,6 +20,7 @@
 #include "nvs.h"
 #include "nvs_flash.h"
 #include <iostream>
+#include "NtpClient.hpp"
 
 extern "C"
 {
@@ -28,6 +29,8 @@ extern "C"
 
 void app_main(void)
 {
+    esp_log_level_set("*", ESP_LOG_VERBOSE);  
     HttpServerInitializer httpServerInitializer;
     httpServerInitializer.startUp();
+    NtpClient ntpClient;
 }

@@ -14,6 +14,7 @@
 #include <sstream>
 
 #include <errno.h>
+#define LOG_LOCAL_LEVEL ESP_LOG_VERBOSE
 #include <esp_log.h>
 #include <lwip/sockets.h>
 #include <stdio.h>
@@ -169,7 +170,7 @@ int Socket::connect(struct in_addr address, uint16_t port) {
 	char msg[50];
 	inet_ntop(AF_INET, &address, msg, sizeof(msg));
 	ESP_LOGD(LOG_TAG, "Connecting to %s:[%d]", msg, port);
-	createSocket();
+	createSocket(true);
 	int rc = ::lwip_connect_r(m_sock, (struct sockaddr*) &serverAddress, sizeof(struct sockaddr_in));
 	if (rc == -1) {
 		ESP_LOGE(LOG_TAG, "connect_cpp: Error: %s", strerror(errno));
