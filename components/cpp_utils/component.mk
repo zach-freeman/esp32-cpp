@@ -10,4 +10,3 @@ COMPONENT_ADD_INCLUDEDIRS=.
 ## Uncomment the following line to enable exception handling 
 #CXXFLAGS+=-fexceptions
 #CXXFLAGS+= -std=c++11
-CXXFLAGS+=-Wno-unused-but-set-parameter

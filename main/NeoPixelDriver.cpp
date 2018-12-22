@@ -3,21 +3,17 @@
 
 #include <cstring>
 
-#include <iostream>
+#include "esp_bt.h"
+#include "esp_bt_device.h"
 #include "esp_log.h"
+#include "esp_system.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "nvs.h"
 #include "nvs_flash.h"
-#include "esp_system.h"
-#include "esp_log.h"
-#include "esp_bt.h"
-#include "esp_bt_device.h"
+#include <iostream>
 
-
-
-using std::cout;
-using std::endl;
+WS2812 * NeoPixelDriver::neoPixelStrand;
 
 NeoPixelDriver::NeoPixelDriver()
 {
@@ -40,6 +36,7 @@ void NeoPixelDriver::startUp()
 
 void NeoPixelDriver::setAllPixels(uint8_t redValue, uint8_t greenValue, uint8_t blueValue)
 {
+    assert(neoPixelStrand != nullptr);
     for (int i = 0; i < PIXEL_COUNT; i++)
     { // do something to all the neopixels
         neoPixelStrand->setPixel(i, redValue, greenValue, blueValue);
@@ -47,48 +44,66 @@ void NeoPixelDriver::setAllPixels(uint8_t redValue, uint8_t greenValue, uint8_t 
     neoPixelStrand->show();
 }
 
-void NeoPixelDriver::testStrand()
+void NeoPixelDriver::setChristmas()
 {
-    for (int j=0; j < 256; j++) {     // cycle all 256 colors in the wheel
-        for (int q=0; q < 3; q++) {
-            for (uint16_t i=0; i < PIXEL_COUNT; i=i+3) {
-                uint32_t pixelColor = Wheel( (i+j) % 255);
-                neoPixelStrand->setPixel(i+q, pixelColor, pixelColor, pixelColor);    //turn every third pixel on
-            }
-        neoPixelStrand->show();
-
-        vTaskDelay(50/portTICK_PERIOD_MS);
-
-      for (uint16_t i=0; i < PIXEL_COUNT; i=i+3) {
-        neoPixelStrand->setPixel(i+q, 0, 0, 0);        //turn every third pixel off
-      }
+    for (int i = 0; i < PIXEL_COUNT; i++)
+    {
+        if (i&1)
+        {
+            // set red
+            neoPixelStrand->setPixel(i, 128, 0, 0);
+        }
+        else
+        {
+            // set green
+            neoPixelStrand->setPixel(i, 0, 128, 0);
+        }
     }
-  }
+    neoPixelStrand->show();
 }
 
+void NeoPixelDriver::testStrand()
+{
+    for (int j = 0; j < 256; j++)
+    { // cycle all 256 colors in the wheel
+        for (int q = 0; q < 3; q++)
+        {
+            for (uint16_t i = 0; i < PIXEL_COUNT; i = i + 3)
+            {
+                uint32_t pixelColor = Wheel((i + j) % 255);
+                neoPixelStrand->setPixel(i + q, pixelColor, pixelColor, pixelColor); // turn every third pixel on
+            }
+            neoPixelStrand->show();
+
+            vTaskDelay(50 / portTICK_PERIOD_MS);
+
+            for (uint16_t i = 0; i < PIXEL_COUNT; i = i + 3)
+            {
+                neoPixelStrand->setPixel(i + q, 0, 0, 0); // turn every third pixel off
+            }
+        }
+    }
+}
 
 // Input a value 0 to 255 to get a color value.
 // The colours are a transition r - g - b - back to r.
-uint32_t NeoPixelDriver::Wheel(uint8_t wheelPosition) 
+uint32_t NeoPixelDriver::Wheel(uint8_t wheelPosition)
 {
-  wheelPosition = 255 - wheelPosition;
-  if(wheelPosition < 85) {
-    return Color(255 - wheelPosition * 3, 0, wheelPosition * 3);
-  }
-  if(wheelPosition < 170) {
-    wheelPosition -= 85;
-    return Color(0, wheelPosition * 3, 255 - wheelPosition * 3);
-  }
-  wheelPosition -= 170;
-  return Color(wheelPosition * 3, 255 - wheelPosition * 3, 0);
+    wheelPosition = 255 - wheelPosition;
+    if (wheelPosition < 85)
+    {
+        return Color(255 - wheelPosition * 3, 0, wheelPosition * 3);
+    }
+    if (wheelPosition < 170)
+    {
+        wheelPosition -= 85;
+        return Color(0, wheelPosition * 3, 255 - wheelPosition * 3);
+    }
+    wheelPosition -= 170;
+    return Color(wheelPosition * 3, 255 - wheelPosition * 3, 0);
 }
 
-uint32_t NeoPixelDriver::Color(uint8_t r, uint8_t g, uint8_t b) 
+uint32_t NeoPixelDriver::Color(uint8_t r, uint8_t g, uint8_t b)
 {
-  return ((uint32_t)r << 16) | ((uint32_t)g <<  8) | b;
+    return ((uint32_t)r << 16) | ((uint32_t)g << 8) | b;
 }
-
-
-
-
-
