@@ -1,7 +1,7 @@
-# Esp32 - Messing around with bluetooth and neopixels
+# Esp32 - Messing around with neopixels
 
 
-This example demonstrates usage of bluetooth and neopixels on esp
+This example demonstrates usage of neopixels on esp
 
 By default, C++ exceptions support is disabled in ESP-IDF. It can be enabled using `CONFIG_CXX_EXCEPTIONS` configuration option.
 

@@ -8,13 +8,13 @@ RUN mkdir -p /home/esp && \
 WORKDIR /home/esp
 
 RUN apt-get update && \
-    apt-get install -y gcc git curl wget make libncurses-dev flex bison gperf python python-serial vim \
+    apt-get install -y gcc git curl wget make ca-certificates libncurses-dev flex bison gperf python python-serial vim \
     python-pip && python -m pip install --upgrade pip
 
 
 USER esp
 
-RUN curl -o esp.tar.gz https://dl.espressif.com/dl/xtensa-esp32-elf-linux64-1.22.0-80-g6c4433a-5.2.0.tar.gz && \
+RUN curl -k -o esp.tar.gz https://dl.espressif.com/dl/xtensa-esp32-elf-linux64-1.22.0-80-g6c4433a-5.2.0.tar.gz && \
     tar -xzf esp.tar.gz && \
     rm esp.tar.gz
 
