@@ -32,5 +32,5 @@ void app_main(void)
     esp_log_level_set("*", ESP_LOG_VERBOSE);  
     HttpServerInitializer httpServerInitializer;
     httpServerInitializer.startUp();
-    NtpClient ntpClient;
+    //NtpClient ntpClient;
 }
